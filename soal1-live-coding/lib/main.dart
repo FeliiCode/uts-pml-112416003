@@ -19,7 +19,32 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
         ),
       ),
-      
+      themeMode: ThemeMode.system,
+      home: const ProfilePage(), // Halaman utama aplikasi kamu
+    );
+  }
+}
+
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Profil Mahasiswa'),
+        actions: [
+         IconButton(
+            onPressed: () {
+              // Aksi saat tombol ditekan
+            },
+            icon: const Icon(Icons.person),
+          ),
+        ],
+      ),
+      body: const Center(
+        child: Text('Halo, Felissa Vivian Margaretha!'),
+      ),
     );
   }
 }

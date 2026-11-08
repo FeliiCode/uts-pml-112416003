@@ -12,7 +12,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Profile, saya Felissa Vivian Margaretha',
       debugShowCheckedModeBanner: false,
-    )
-
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.indigo,
+          brightness: Brightness.dark,
+        ),
+      ),
+      
+    );
   }
 }

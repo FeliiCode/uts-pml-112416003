@@ -12,19 +12,27 @@ class _LoginPageState extends State<LoginPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isLoading = false;
-  bool _isPasswordVisible = false; // Untuk toggle intip password
+  bool _isPasswordVisible = false;
+
+  // Wajib tambahkan dispose untuk membersihkan controller saat pindah halaman
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   void _handleLogin() async {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
-      
+
       // Simulasi loading 2 detik
       await Future.delayed(const Duration(seconds: 2));
-      
-      if (!mounted) return;
-      setState(() => _isLoading = false);
 
-      // Pindah ke Halaman Profil
+      // Cek apakah widget masih aktif sebelum melakukan tindakan UI / Navigasi
+      if (!mounted) return;
+
+      // Pindah ke Halaman Profil menggunakan Navigator
       Navigator.pushReplacementNamed(context, '/profile');
     }
   }
@@ -44,7 +52,6 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Icon Header Utama (Logo / Avatar)
                 CircleAvatar(
                   radius: 45,
                   backgroundColor: Theme.of(context).colorScheme.primaryContainer,
@@ -68,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 32),
 
-                // Input Username dengan Icon User
+                // Input Username
                 TextFormField(
                   controller: _usernameController,
                   decoration: const InputDecoration(
@@ -77,11 +84,11 @@ class _LoginPageState extends State<LoginPage> {
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) =>
-                      (value == null || value.isEmpty) ? 'Username wajib diisi' : null,
+                      (value == null || value.trim().isEmpty) ? 'Username wajib diisi' : null,
                 ),
                 const SizedBox(height: 16),
 
-                // Input Password dengan Icon Kunci & Icon Mata
+                // Input Password
                 TextFormField(
                   controller: _passwordController,
                   obscureText: !_isPasswordVisible,
@@ -90,9 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                     prefixIcon: const Icon(Icons.lock_outline),
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _isPasswordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
+                        _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
                       ),
                       onPressed: () {
                         setState(() {
@@ -103,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                     border: const OutlineInputBorder(),
                   ),
                   validator: (value) =>
-                      (value == null || value.isEmpty) ? 'Password wajib diisi' : null,
+                      (value == null || value.trim().isEmpty) ? 'Password wajib diisi' : null,
                 ),
                 const SizedBox(height: 28),
 

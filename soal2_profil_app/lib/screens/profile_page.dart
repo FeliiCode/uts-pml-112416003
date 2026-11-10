@@ -18,85 +18,119 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         title: const Text('Halaman Profil'),
         actions: [
-          // Switch Mode Gelap
-          Switch(
-            value: themeModeNotifier.value == ThemeMode.dark,
-            onChanged: (value) {
-              setState(() {
-                themeModeNotifier.value = value ? ThemeMode.dark : ThemeMode.light;
-              });
+          // Switch Mode Gelap / Terang Sinkron dengan ThemeNotifier
+          ValueListenableBuilder<ThemeMode>(
+            valueListenable: themeModeNotifier,
+            builder: (context, currentMode, child) {
+              return Switch(
+                value: currentMode == ThemeMode.dark,
+                onChanged: (isDark) {
+                  themeModeNotifier.value = isDark ? ThemeMode.dark : ThemeMode.light;
+                },
+              );
             },
           ),
         ],
       ),
-      // Drawer (Elemen Scaffold tambahan 1)
+      // Elemen 1: Drawer (Menu Navigasi Samping)
       drawer: Drawer(
         child: ListView(
+          padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.indigo),
-              child: Text('Menu Navigasi', style: TextStyle(color: Colors.white, fontSize: 20)),
+            UserAccountsDrawerHeader(
+              accountName: Text(currentProfile.name),
+              accountEmail: Text(currentProfile.email),
+              currentAccountPicture: CircleAvatar(
+                backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                foregroundImage: const AssetImage('assets/images/profile.png'),
+                child: const Icon(Icons.person, size: 40),
+              ),
             ),
             ListTile(
               leading: const Icon(Icons.person),
-              title: const Text('Profil'),
+              title: const Text('Profil Saya'),
               onTap: () => Navigator.pop(context),
             ),
             ListTile(
-              leading: const Icon(Icons.info),
+              leading: const Icon(Icons.info_outline),
               title: const Text('Tentang Saya'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.pop(context); // Tutup drawer terlebih dahulu
                 Navigator.pushNamed(context, '/about');
               },
             ),
+            const Divider(),
             ListTile(
-              leading: const Icon(Icons.logout),
-              title: const Text('Logout'),
-              onTap: () => Navigator.pushReplacementNamed(context, '/login'),
+              leading: const Icon(Icons.logout, color: Colors.red),
+              title: const Text('Logout', style: TextStyle(color: Colors.red)),
+              onTap: () {
+                Navigator.pop(context); // Tutup drawer sebelum navigasi
+                Navigator.pushReplacementNamed(context, '/login');
+              },
             ),
           ],
         ),
       ),
+      // Elemen 2: Body (Konten Utama Profil)
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            // Foto diri dari assets
-            const CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage('assets/images/profile.png'),
+            // Foto Avatar dengan Fallback Icon
+            CircleAvatar(
+              radius: 55,
+              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+              foregroundImage: const AssetImage('assets/images/profile.png'),
+              child: Icon(
+                Icons.person,
+                size: 60,
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
             const SizedBox(height: 12),
-            Text(currentProfile.name, style: Theme.of(context).textTheme.headlineSmall),
+            Text(
+              currentProfile.name,
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            const SizedBox(height: 4),
             Text('${currentProfile.nim} | ${currentProfile.prodi} (${currentProfile.kelas})'),
             const SizedBox(height: 8),
-            Text(currentProfile.bio, textAlign: TextAlign.center),
+            Text(
+              currentProfile.bio,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontStyle: FontStyle.italic),
+            ),
             const Divider(height: 30),
             
-            // Reusable Widget InfoTile
+            // Reusable Info Tiles
             InfoTile(icon: Icons.email, title: 'Email', value: currentProfile.email),
             InfoTile(icon: Icons.phone, title: 'Nomor HP', value: currentProfile.phone),
             InfoTile(icon: Icons.code, title: 'GitHub', value: currentProfile.github),
           ],
         ),
       ),
-      // FloatingActionButton untuk Edit Profil
+      // Elemen 3: FloatingActionButton untuk Edit Profil
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.edit),
         onPressed: () async {
           final result = await Navigator.pushNamed(context, '/edit_profile');
           if (result == true) {
-            setState(() {}); // Memperbarui tampilan profil secara langsung
+            setState(() {}); // Memperbarui UI jika data profil di-update
           }
         },
       ),
-      // BottomNavigationBar (Elemen Scaffold tambahan 2)
+      // Elemen 4: BottomNavigationBar (Navigasi Tab Bawah)
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() => _currentIndex = index);
-          if (index == 1) Navigator.pushNamed(context, '/about');
+        onTap: (index) async {
+          if (index == 1) {
+            await Navigator.pushNamed(context, '/about');
+            setState(() => _currentIndex = 0); // Reset tab aktif kembali ke Profil
+          } else {
+            setState(() => _currentIndex = index);
+          }
         },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),

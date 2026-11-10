@@ -2,6 +2,15 @@ import 'package:flutter/material.dart';
 import 'models/profile.dart';
 
 final ValueNotifier<ThemeMode> themeModeNotifier = ValueNotifier(ThemeMode.light)
+
+Profile currentProfile = Profile(
+    name: 'Felissa Vivian Margaretha',
+    nim: '1124160036',
+    prodi: 'Teknik Informatika',
+    email: 'vivianmargaret060919@gmail.com',
+    phone: '083892085558',
+    github: 'https://github.com/FeliiCode',
+);
 void main(){
   runApp(const MyApp());
 }

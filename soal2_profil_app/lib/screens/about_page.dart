@@ -3,12 +3,28 @@ import 'package:flutter/material.dart';
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
 
+  // Variabel dibuat 'final' dan tipe 'List>' ditulis lengkap
   final List> items = const [
-    {'title': 'Keahlian: Flutter Development', 'subtitle': 'Pemrograman Aplikasi Mobile Cross-Platform'},
-    {'title': 'Keahlian: UI/UX Design', 'subtitle': 'Figma, Wireframing, & Prototyping'},
-    {'title': 'Hobi: Open Source Contributing', 'subtitle': 'Aktif di GitHub & Komunitas'},
-    {'title': 'Pendidikan: S1 Teknik Informatika', 'subtitle': 'Global institute (2022 - Sekarang)'},
-    {'title': 'Pendidikan: SMK Negeri 1 KAB TANGERANG', 'subtitle': 'Jurusan DKV (2021 - 2024)'},
+    {
+      'title': 'Keahlian: Flutter Development',
+      'subtitle': 'Pemrograman Aplikasi Mobile Cross-Platform',
+    },
+    {
+      'title': 'Keahlian: UI/UX Design',
+      'subtitle': 'Figma, Wireframing, & Prototyping',
+    },
+    {
+      'title': 'Hobi: Open Source Contributing',
+      'subtitle': 'Aktif di GitHub & Komunitas',
+    },
+    {
+      'title': 'Pendidikan: S1 Teknik Informatika',
+      'subtitle': 'Global Institute (2024 - Sekarang)',
+    },
+    {
+      'title': 'Pendidikan: SMK Negeri 1 KAB TANGERANG',
+      'subtitle': 'Desain Komunikasi Visual / Multimedia (2021 - 2024)',
+    },
   ];
 
   @override

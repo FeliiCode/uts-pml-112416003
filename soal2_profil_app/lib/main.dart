@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:soal2_profil_app/screens/login_page.dart';
 import 'models/profile.dart';
 
 final ValueNotifier<ThemeMode> themeModeNotifier = ValueNotifier(ThemeMode.light)
 
-Profile currentProfile = Profile(
+profile currentProfile = profile(
     name: 'Felissa Vivian Margaretha',
     nim: '1124160036',
     prodi: 'Teknik Informatika',
@@ -35,6 +36,11 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.deepPurple,
           useMaterial3: true,
         ),
+        initialRoute: '/login',
+        routes: {
+          '/login' : (context) => const LoginPage(),
+          '/profile' :(context) =>  const ProfilePage(),
+        },
       )
     }
   }

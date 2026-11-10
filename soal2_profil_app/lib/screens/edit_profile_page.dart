@@ -19,7 +19,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     super.initState();
     _nameController = TextEditingController(text: currentProfile.name);
     _emailController = TextEditingController(text: currentProfile.email);
-    _hpController = TextEditingController(text: currentProfile.hp);
+    _hpController = TextEditingController(text: currentProfile.phone);
   }
 
   void _saveProfile() {
@@ -27,7 +27,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       setState(() {
         currentProfile.name = _nameController.text;
         currentProfile.email = _emailController.text;
-        currentProfile.hp = _hpController.text;
+        currentProfile.phone = _hpController.text;
       });
       // Pop dan kirimkan sinyal berhasil
       Navigator.pop(context, true);

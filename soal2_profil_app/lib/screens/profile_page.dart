@@ -76,7 +76,7 @@ class _ProfilePageState extends State<ProfilePage> {
             
             // Reusable Widget InfoTile
             InfoTile(icon: Icons.email, title: 'Email', value: currentProfile.email),
-            InfoTile(icon: Icons.phone, title: 'Nomor HP', value: currentProfile.hp),
+            InfoTile(icon: Icons.phone, title: 'Nomor HP', value: currentProfile.phone),
             InfoTile(icon: Icons.code, title: 'GitHub', value: currentProfile.github),
           ],
         ),

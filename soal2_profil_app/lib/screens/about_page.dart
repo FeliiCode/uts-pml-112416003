@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
 
-  // Variabel dibuat 'final' dan tipe 'List>' ditulis lengkap
-  final List> items = const [
+  final items = const [
     {
       'title': 'Keahlian: Flutter Development',
       'subtitle': 'Pemrograman Aplikasi Mobile Cross-Platform',
